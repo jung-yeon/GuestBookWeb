@@ -14,5 +14,5 @@
 <hr/>
 
 ### 프로젝트의 기본 구조
+![제목을 입력해주세요_-001 (3)](https://github.com/jung-yeon/GuestBookWeb/assets/77679326/7965ff2e-d7c8-4aca-a0b5-89bf12e48a70)
 
-![제목을 입력해주세요_-001 (3)](https://github.com/jung-yeon/GuestBookWeb/assets/77679326/a00a911c-df74-4d8c-905f-13aa64390916)
