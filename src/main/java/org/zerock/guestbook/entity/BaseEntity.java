@@ -23,4 +23,5 @@ public class BaseEntity {
     @LastModifiedDate
     @Column(name = "moddate")
     private LocalDateTime modDate;
+    //최종 수정 시간이 반영되기 때문에 특정한 엔티티를 수정한 후에 save()했을 경우에 동작
 }
