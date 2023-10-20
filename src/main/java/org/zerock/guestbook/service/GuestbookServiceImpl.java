@@ -46,6 +46,24 @@ public class GuestbookServiceImpl implements GuestbookService{
         return result.isPresent()? entityToDto(result.get()):null;
     }
 
+    @Override
+    public void remove(Long gno) {
+        repository.deleteById(gno);
+    }
+
+    @Override
+    public void modify(GuestbookDTO dto) {
+        // 업데이트 하는 항목은 '제목','내용'
+        Optional<Guestbook> result = repository.findById(dto.getGno());
+        if(result.isPresent()){
+            Guestbook entity = result.get();
+            entity.changeTitle(dto.getTitle());
+            entity.changeContent(dto.getContent());
+
+            repository.save(entity);
+        }
+    }
+
 
     //     PageResultDTO에는 JPA의 처리 결과인 Page<Entity>와 Function을 전달해서 엔티티객체들을
 //    DTO의 리스트로 변환하고 화면에 페이지 처리와 필요한 값 생성

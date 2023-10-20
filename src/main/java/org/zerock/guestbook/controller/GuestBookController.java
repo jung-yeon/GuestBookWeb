@@ -21,12 +21,12 @@ public class GuestBookController {
     private final GuestbookService service; //final로 선언
 
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "redirect:/guestbook/list";
     }
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model){
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
         //발생되는 모든 행위와 이벤트 정보를 시간에 따라 남겨둔 데이터
         //연속된 데이터의 기록
         log.info("list..........." + pageRequestDTO);
@@ -38,27 +38,51 @@ public class GuestBookController {
 
     //Get방식- 화면 보여줌
     @GetMapping("/register")
-    public void register(){
+    public void register() {
         log.info("register get...");
     }
+
     //Post방식 - 처리후에 목록페이지로 이동하도록 설계
     //RedirectAttributes - 한번만 화면에서 'msg'라는 변수를 사용할 수 있도록 처리
     @PostMapping("/register")
-    public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes){
+    public String registerPost(GuestbookDTO dto, RedirectAttributes redirectAttributes) {
         log.info("dto..." + dto);
         Long gno = service.register(dto);
         //새로 추가된 엔티티의 번호
 
         //addFlashAttribute - 단한번만 데이터를전달
-        redirectAttributes.addFlashAttribute("msg",gno);
+        redirectAttributes.addFlashAttribute("msg", gno);
         return "redirect:/guestbook/list";
     }
 
-    @GetMapping("/read")
-    public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
+    @GetMapping({"/read", "/modify"})
+    public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
         log.info("gno : " + gno);
         GuestbookDTO dto = service.read(gno);
-        model.addAttribute("dto",dto);
+        model.addAttribute("dto", dto);
+    }
+
+    @PostMapping("/remove")
+    public String remove(long gno, RedirectAttributes redirectAttributes) {
+        log.info("gno: " + gno);
+        service.remove(gno);
+        redirectAttributes.addFlashAttribute("msg", gno);
+        return "redirect:/guestbook/list";
+    }
+
+    @PostMapping("/modify")
+    public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+                         RedirectAttributes redirectAttributes) {
+
+        log.info("post modify.........................................");
+        log.info("dto: " + dto);
+
+        service.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("gno", dto.getGno());
+
+        return "redirect:/guestbook/read";
     }
 
 }

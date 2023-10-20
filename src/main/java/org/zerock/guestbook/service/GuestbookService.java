@@ -8,6 +8,10 @@ import org.zerock.guestbook.entity.Guestbook;
 public interface GuestbookService {
     Long register(GuestbookDTO dto);
     GuestbookDTO read(Long gno);
+    // 삭제
+    void remove(Long gno);
+    // 수정
+    void modify(GuestbookDTO dto);
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
     //java8버전 부터는 인터페이스의 실제 내용을 가지는 코드를 default 라는 키워드로 생성 가능
     // 기존에 추상 클래스를 통해서 전달해야 하는 실제 코드를 인터페이스에 선언 가능
