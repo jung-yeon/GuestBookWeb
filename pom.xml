@@ -39,10 +39,16 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <!-- Thymeleaf 의존성 -->
+<!--        <dependency>-->
+<!--            <groupId>org.thymeleaf</groupId>-->
+<!--            <artifactId>thymeleaf</artifactId>-->
+<!--            <version>3.1.2.RELEASE</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.1.2.RELEASE</version>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>3.0.9.RELEASE</version>
         </dependency>
         <!-- Lombok 의존성 (옵션) -->
         <dependency>

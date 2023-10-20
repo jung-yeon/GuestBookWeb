@@ -9,19 +9,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @Data
-public class PageRequestDTO {
+public class PageRequestDTO<DTO, EN> {
     // 목록 페이지를 요청할 때 사용하는 데이터를 재사용하기 쉽게 만드는 클래스
     // 페이지 번호, 페이지 내 목록의 개수, 검색 조건 등의 파라미터를 DTO로 선언하고
     // 나중에 재사용하는 용도로 사용
 
-
     // 목적 - JPA쪽에서 사용하는 Pageable타입의 객체를 생성
 
-
+    //현재 페이지 번호
     private int page;
+    //목록 사이즈
     private int size;
 
     public PageRequestDTO() {
@@ -34,6 +36,8 @@ public class PageRequestDTO {
     public Pageable getPageable(Sort sort) {
         return PageRequest.of(page - 1, size, sort);
     }
+
+
 
 
 }
