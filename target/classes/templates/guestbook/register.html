@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+        <h1 class="mt-4">GuestBook Register Page</h1>
+        <form th:action="@{/guestbook/register}" th:method="post">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" name="title" placeholder="Enter Title">
+
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control" rows="5" name="content"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Writer</label>
+                <input type="text" class="form-control" name="writer" placeholder="Enter Writer">
+            </div>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Submit
+            </button>
+
+        </form>
+    </th:block>
+</th:block>
+<!-- 만일 링크 처리 시에 (page={page},size=${result.size})와 같은 내용ㅇ을 추가 한다면 10개가 아닌 원하는 수만큼의 목록을 조회할수있음 -->

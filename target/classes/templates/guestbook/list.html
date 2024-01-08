@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+  <th:block th:fragment="content">
+    <h1 class="mt-4">GuestBook List Page
+      <span>
+        <a th:href="@{/guestbook/register}">
+          <button type="button" class="btn btn-outline-primary">REGISTER</button>
+        </a>
+      </span>
+    </h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Gno</th>
+          <th scope="col">Title</th>
+          <th scope="col">Regdate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="dto : ${result.dtoList}">
+          <th scope="row">
+            <a th:href="@{/guestbook/read(gno=${dto.gno}, page=${result.page})}">
+              [[${dto.gno}]]
+            </a>
+          </th>
+          <td>[[${dto.title}]]</td>
+          <td>[[${dto.writer}]]</td>
+          <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="pagination h-100 justify-content-center align-items-center">
+      <li class="page-item " th:if="${result.prev}">
+        <!-- Paging처리!!!! -->
+        <a class="page-link" th:href="@{/guestbook/list(page=${result.start-1})}" tabindex="-1">Previous</a>
+        <!--  이전의 경우 PageResultDTO의 start값보다 1보다 적은 값으로 지정      -->
+      </li>
+
+      <li class=" 'page-item' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
+        <a class="page-link" th:href="@{/guestbook/list(page=${page})}">[[${page}]]</a>
+      </li>
+
+      <li class="page-item " th:if="${result.next}">
+        <a class="page-link" th:href="@{/guestbook/list(page=${result.end+1})}">Next</a>
+<!--  다음의 경우 PageResultDTO의 end값보다 1이 크도록 지정      -->
+      </li>
+    </ul>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>modal content</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script th:inline="javascript">
+    $(document).ready(function() {
+      var msg = [[${msg}]];
+      console.log(msg);
+       if (msg) {
+         $("#exampleModal").modal("show");
+       }
+    });
+  </script>
+  </th:block>
+</th:block>
+<!-- 만일 링크 처리 시에 (page={page},size=${result.size})와 같은 내용을 추가 한다면 10개가 아닌 원하는 수만큼의 목록을 조회할수있음 -->
