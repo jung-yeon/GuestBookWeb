@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -25,6 +24,10 @@ public class PageRequestDTO<DTO, EN> {
     private int page;
     //목록 사이즈
     private int size;
+    // 검색 조건
+    private String type;
+    // 검색 키워드
+    private String keyword;
 
     public PageRequestDTO() {
         this.page = 1;
